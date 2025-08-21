@@ -216,16 +216,12 @@ public class Util {
 ### 6. StudentService.java (Service Layer)
 - **When Created**: Created to encapsulate data access logic
 - **Why Created**: To provide a clean separation of concerns and reusable data access methods
-- **Purpose**: Provides common CRUD operations for Student and Certificate entities
+- **Purpose**: Provides common CRUD operations for Student entities
 - **Key Functions**:
   - saveStudent(): Persists a new student entity
   - getStudentById(): Retrieves a student by primary key
   - updateStudent(): Updates an existing student entity
   - deleteStudent(): Deletes a student by primary key
-  - saveCertificate(): Persists a new certificate entity
-  - getCertificateById(): Retrieves a certificate by primary key
-  - updateCertificate(): Updates an existing certificate entity
-  - deleteCertificate(): Deletes a certificate by primary key
 - **Pseudo Example**:
 ```java
 public class StudentService {
@@ -259,39 +255,6 @@ public class StudentService {
             Student student = session.get(Student.class, studentId);
             if (student != null) {
                 session.remove(student);
-            }
-            transaction.commit();
-        }
-    }
-    
-    public void saveCertificate(Certificates certificate) {
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.persist(certificate);
-            transaction.commit();
-        }
-    }
-    
-    public Certificates getCertificateById(Long certificateId) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(Certificates.class, certificateId);
-        }
-    }
-    
-    public void updateCertificate(Certificates certificate) {
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.merge(certificate);
-            transaction.commit();
-        }
-    }
-    
-    public void deleteCertificate(Long certificateId) {
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            Certificates certificate = session.get(Certificates.class, certificateId);
-            if (certificate != null) {
-                session.remove(certificate);
             }
             transaction.commit();
         }
@@ -524,27 +487,6 @@ if (fetchedStudent != null) {
 
 // Delete a student
 service.deleteStudent(2L);
-
-// Save a new certificate
-Certificates newCert = new Certificates();
-newCert.setId("CERT004");
-newCert.setLink("http://example.com/cert4");
-service.saveCertificate(newCert);
-
-// Retrieve a certificate by ID
-Certificates fetchedCert = service.getCertificateById(1L);
-if (fetchedCert != null) {
-    System.out.println("Certificate ID: " + fetchedCert.getId());
-}
-
-// Update a certificate
-if (fetchedCert != null) {
-    fetchedCert.setLink("http://example.com/updated-cert");
-    service.updateCertificate(fetchedCert);
-}
-
-// Delete a certificate
-service.deleteCertificate(2L);
 ```
 
 ## Session Management Best Practices
@@ -590,22 +532,6 @@ public class StudentService {
             session.remove(student);
         }
     }
-    
-    // Similar methods for Certificates
-    public void saveCertificate(Session session, Certificates certificate) {
-        session.persist(certificate);
-    }
-    
-    public Certificates getCertificateById(Session session, Long certificateId) {
-        return session.get(Certificates.class, certificateId);
-    }
-    
-    public void deleteCertificate(Session session, Long certificateId) {
-        Certificates certificate = session.get(Certificates.class, certificateId);
-        if (certificate != null) {
-            session.remove(certificate);
-        }
-    }
 }
 ```
 
@@ -637,29 +563,6 @@ public class StudentDAO {
         }
     }
 }
-
-public class CertificateDAO {
-    private Session session;
-    
-    public CertificateDAO(Session session) {
-        this.session = session;
-    }
-    
-    public void save(Certificates certificate) {
-        session.persist(certificate);
-    }
-    
-    public Certificates findById(Long id) {
-        return session.get(Certificates.class, id);
-    }
-    
-    public void delete(Long id) {
-        Certificates certificate = session.get(Certificates.class, id);
-        if (certificate != null) {
-            session.remove(certificate);
-        }
-    }
-}
 ```
 
 #### 3. Contextual Session Pattern:
@@ -683,24 +586,6 @@ public class StudentService {
         Student student = session.get(Student.class, studentId);
         if (student != null) {
             session.remove(student);
-        }
-    }
-    
-    public void saveCertificate(Certificates certificate) {
-        Session session = sessionFactory.getCurrentSession();
-        session.persist(certificate);
-    }
-    
-    public Certificates getCertificateById(Long certificateId) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(Certificates.class, certificateId);
-    }
-    
-    public void deleteCertificate(Long certificateId) {
-        Session session = sessionFactory.getCurrentSession();
-        Certificates certificate = session.get(Certificates.class, certificateId);
-        if (certificate != null) {
-            session.remove(certificate);
         }
     }
 }
