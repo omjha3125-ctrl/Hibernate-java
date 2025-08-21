@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This DOCTYPE declaration specifies the DTD (Document Type Definition) for Hibernate configuration files. -->
+<!-- It tells the XML parser what structure and elements are valid within this file. -->
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<!-- The root element of the Hibernate configuration. Everything goes inside this tag. -->
+<hibernate-configuration>
+
+    <!-- A session-factory is a factory for creating Hibernate Session objects. -->
+    <!-- A Session is the main runtime interface between a Java application and Hibernate. -->
+    <!-- It's used to perform database operations like saving, updating, deleting, and querying objects. -->
+    <session-factory>
+
+        <!-- Database connection settings. These tell Hibernate how to connect to your database. -->
+
+        <!-- The JDBC URL to connect to the PostgreSQL database. -->
+        <!-- Format: jdbc:postgresql://<host>:<port>/<database_name> -->
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/myappdb</property>
+
+        <!-- The username to use when connecting to the database. -->
+        <property name="hibernate.connection.username">recoil</property>
+
+        <!-- The password for the database user. -->
+        <!-- NOTE: Storing passwords directly in config files is not secure for production. -->
+        <property name="hibernate.connection.password">Om0099889900</property>
+
+        <!-- The fully qualified class name of the JDBC driver for PostgreSQL. -->
+        <!-- Hibernate uses this to load the driver and establish the connection. -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+
+        <!-- Hibernate-specific configuration properties. -->
+
+        <!-- The SQL dialect tells Hibernate which SQL variant to generate for your specific database. -->
+        <!-- For PostgreSQL. This helps Hibernate generate optimized SQL. -->
+        <!-- Optional in newer versions if Hibernate can auto-detect it. -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <!-- If true, Hibernate will print all SQL statements to the console/log. Useful for debugging. -->
+        <property name="hibernate.show_sql">true</property>
+
+        <!-- If true, Hibernate will format the printed SQL statements to make them more readable. -->
+        <property name="hibernate.format_sql">true</property>
+
+        <!-- This property controls the DDL (Data Definition Language) actions Hibernate performs. -->
+        <!-- 'update': Hibernate will automatically create or update the database schema based on your entity mappings. -->
+        <!-- Other options: 'create' (drops and creates schema), 'create-drop' (create on startup, drop on shutdown), 'validate' (just checks schema). -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Mapping declarations. This tells Hibernate which Java classes (entities) are mapped to database tables. -->
+
+        <!-- Maps the 'entities.Student' Java class to its corresponding database table. -->
+        <!-- Hibernate needs to know about all your entities. -->
+        <mapping class="entities.Student"/>
+        
+        <!-- Maps the 'entities.Certificates' Java class to its corresponding database table. -->
+        <!-- This entity has a relationship with Student, so both must be mapped. -->
+        <mapping class="entities.Certificates"/>
+
+    </session-factory>
+
+</hibernate-configuration>
