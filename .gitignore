@@ -35,4 +35,8 @@ build/
 .vscode/
 
 ### Mac OS ###
-.DS_StoreQWEN.md
+.DS_Store
+
+QWEN.md
+README.md
+project_update.md
