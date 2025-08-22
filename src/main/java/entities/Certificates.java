@@ -9,6 +9,13 @@ import jakarta.persistence.*;
  * 
  * This entity demonstrates a many-to-one relationship with the Student entity.
  * Each certificate belongs to one student, but a student can have multiple certificates.
+ * 
+ * Key Concepts Demonstrated:
+ * - Entity Mapping: @Entity, @Table
+ * - Primary Key: @Id, @GeneratedValue
+ * - Field Mapping: Direct mapping of fields to columns
+ * - Relationships: Many-to-One relationship with Student (@ManyToOne)
+ * - Foreign Key: @JoinColumn to specify the foreign key column
  */
 @Entity // This annotation marks the class as a Hibernate entity, meaning it's mapped to a database table.
 @Table(name = "st_certificates") // This specifies the name of the database table that this entity maps to.
@@ -18,6 +25,11 @@ public class Certificates {
      * The unique identifier for a Certificate record.
      * 
      * In databases, each row in a table typically has a unique ID. This field corresponds to that.
+     * 
+     * Annotations Used:
+     * - @Id: Marks this field as the Primary Key of the database table.
+     * - @GeneratedValue(strategy = GenerationType.IDENTITY): Tells Hibernate that the database 
+     *   should automatically generate this value (e.g., auto-increment in PostgreSQL).
      */
     @Id // Marks this field as the Primary Key of the database table.
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Tells Hibernate that the database should automatically generate this value (e.g., auto-increment in PostgreSQL).
@@ -42,6 +54,10 @@ public class Certificates {
      * 
      * This field establishes the many-to-one relationship between Certificate and Student.
      * Many certificates can belong to one student.
+     * 
+     * Annotations Used:
+     * - @ManyToOne: This annotation defines the many-to-one relationship with the Student entity.
+     * - @JoinColumn(name = "studenId"): This specifies the foreign key column in the database that links to the Student entity.
      */
     @ManyToOne // This annotation defines the many-to-one relationship with the Student entity.
     @JoinColumn(name = "studenId") // This specifies the foreign key column in the database that links to the Student entity.

@@ -12,6 +12,15 @@ import java.util.List;
  * 
  * When we use Hibernate (an ORM - Object-Relational Mapping tool), we need to tell it
  * how this Java object relates to a database table. The annotations below do this.
+ * 
+ * Key Concepts Demonstrated:
+ * - Entity Mapping: @Entity, @Table
+ * - Primary Key: @Id, @GeneratedValue
+ * - Field Mapping: Direct mapping of fields to columns
+ * - Relationships: One-to-Many relationship with Certificates (@OneToMany)
+ * - Lazy Loading: Fetching related data only when needed
+ * - Cascading: Automatically applying operations to related entities
+ * - Orphan Removal: Automatically deleting child entities when removed from the parent
  */
 @Entity // This annotation marks the class as a Hibernate entity, meaning it's mapped to a database table.
 @Table(name = "stud") // This specifies the name of the database table that this entity maps to.
@@ -21,6 +30,11 @@ public class Student {
      * The unique identifier for a Student record.
      * 
      * In databases, each row in a table typically has a unique ID. This field corresponds to that.
+     * 
+     * Annotations Used:
+     * - @Id: Marks this field as the Primary Key of the database table.
+     * - @GeneratedValue(strategy = GenerationType.IDENTITY): Tells Hibernate that the database 
+     *   should automatically generate this value (e.g., auto-increment in PostgreSQL).
      */
     @Id // Marks this field as the Primary Key of the database table.
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Tells Hibernate that the database should automatically generate this value (e.g., auto-increment in PostgreSQL).
@@ -61,12 +75,13 @@ public class Student {
      * 
      * This field establishes the one-to-many relationship between Student and Certificates.
      * One student can have many certificates.
-     * 
-     * @OneToMany: Defines the one-to-many relationship with the Certificates entity.
-     * mappedBy = "student": Indicates that the "student" field in the Certificates entity owns the relationship.
-     * fetch = FetchType.LAZY: Certificates will be loaded only when explicitly accessed (lazy loading).
-     * cascade = CascadeType.ALL: All operations (persist, merge, remove, etc.) will cascade to certificates.
-     * orphanRemoval = true: If a certificate is removed from this list, it will be deleted from the database.
+
+     * Annotations Used:
+     * - @OneToMany: Defines the one-to-many relationship with the Certificates entity.
+     * - mappedBy = "student": Indicates that the "student" field in the Certificates entity owns the relationship.
+     * - fetch = FetchType.LAZY: Certificates will be loaded only when explicitly accessed (lazy loading).
+     * - cascade = CascadeType.ALL: All operations (persist, merge, remove, etc.) will cascade to certificates.
+     * - orphanRemoval = true: If a certificate is removed from this list, it will be deleted from the database.
      */
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Certificates> certificates = new ArrayList<>();

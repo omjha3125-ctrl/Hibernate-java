@@ -21,12 +21,26 @@ import java.util.List;
  * 2. Working with entity relationships (Student and Certificates)
  * 3. Handling multiple entities in a single transaction
  * 4. Using the StudentService for common operations
+ * 
+ * Key Concepts Demonstrated:
+ * - SessionFactory Management: Using a singleton pattern for efficient resource management
+ * - Session Handling: Opening and closing sessions for database operations
+ * - Transaction Management: Using transactions to ensure data consistency
+ * - Entity Relationships: Working with one-to-many relationships between entities
+ * - CRUD Operations: Creating, reading, updating, and deleting entities
+ * - Exception Handling: Properly handling exceptions during database operations
+ * - Resource Management: Ensuring proper cleanup of resources
  */
 public class Main {
     /**
      * The main method. This is the first method called when the program runs.
      *
      * @param args Command-line arguments passed to the program (not used here).
+     * 
+     * Purpose:
+     * - Entry point for the application
+     * - Demonstrates complete workflow of Hibernate operations
+     * - Shows both direct session usage and service layer usage
      */
     public static void main(String[] args) {
 

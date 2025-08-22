@@ -9,6 +9,12 @@ import org.hibernate.cfg.Configuration; // The class used to configure Hibernate
  * Creating a SessionFactory is a costly operation, so it's a best practice to create it once
  * and reuse it throughout the application's lifecycle. This class implements the Singleton pattern
  * to ensure only one instance of SessionFactory is created.
+ * 
+ * Key Concepts Demonstrated:
+ * - Singleton Pattern: Ensuring a class has only one instance and providing global access to it
+ * - Static Initialization Block: Used for one-time initialization when the class is loaded
+ * - Exception Handling: Properly handling configuration errors during initialization
+ * - Resource Management: Managing expensive resources like database connection factories
  */
 public class Util {
 
@@ -17,6 +23,11 @@ public class Util {
      * 'private' means it can only be accessed within this class.
      * 'static' means it belongs to the class itself, not to any specific instance of the class.
      * It's initialized to null and will be created once in the static block.
+     * 
+     * Purpose:
+     * - Holds the single SessionFactory instance for the entire application
+     * - Ensures thread-safe access to the SessionFactory
+     * - Prevents multiple SessionFactory instances from being created
      */
     private static SessionFactory sessionFactory;
 
@@ -24,6 +35,11 @@ public class Util {
      * A static initialization block.
      * This block runs once when the class is first loaded by the JVM.
      * It's used here to perform the expensive task of creating the SessionFactory.
+     * 
+     * Purpose:
+     * - Initializes the SessionFactory when the class is first loaded
+     * - Handles any exceptions that might occur during initialization
+     * - Ensures only one SessionFactory instance is created
      */
     static {
         // Wrap the creation process in a try-catch block to handle potential configuration errors.
@@ -67,6 +83,11 @@ public class Util {
      * This is the standard way to access the Singleton instance.
      *
      * @return The single, shared SessionFactory instance.
+     * 
+     * Purpose:
+     * - Provides global access to the SessionFactory instance
+     * - Ensures that all parts of the application use the same SessionFactory
+     * - Maintains the Singleton pattern by returning the single instance
      */
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
